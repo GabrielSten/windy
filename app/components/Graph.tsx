@@ -12,32 +12,6 @@ import { SMHIdata, SortedTime, TimeSery } from "../types";
 import { useState } from "react";
 import date from "date-and-time";
 
-const data1 = [
-  { name: "Page A", uv: 0, pv: 2400, amt: 2400 },
-  { name: "Page A", uv: 500, pv: 2400, amt: 2400 },
-  { name: "Page A", uv: 0, pv: 2400, amt: 2400 },
-  { name: "Page A", uv: 500, pv: 2400, amt: 2400 },
-  { name: "Page A", uv: 0, pv: 2400, amt: 2400 },
-  { name: "Page A", uv: 500, pv: 2400, amt: 2400 },
-  { name: "Page A", uv: 0, pv: 2400, amt: 2400 },
-  { name: "Page A", uv: 500, pv: 2400, amt: 2400 },
-];
-
-const data2 = [
-  {
-    time: "08:00",
-    ms: 1.6,
-  },
-  {
-    time: "13:00",
-    ms: 7.8,
-  },
-  {
-    time: "19:00",
-    ms: 0.9,
-  },
-];
-
 interface GraphData {
   time: string;
   ms: number;
@@ -60,8 +34,6 @@ export default function Graph(props: { data: TimeSery[] | undefined }) {
       }
     });
   });
-
-  console.log(graphData);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -106,29 +78,4 @@ export default function Graph(props: { data: TimeSery[] | undefined }) {
       </AreaChart>
     </ResponsiveContainer>
   );
-}
-
-{
-  /* <ResponsiveContainer width="100%" height="100%">
-      <AreaChart
-        width={500}
-        height={300}
-        data={data1}
-        margin={{
-          top: 1,
-          right: 1,
-          left: 1,
-          bottom: 1,
-        }}
-      >
-        <XAxis
-          dataKey="name"
-          tick={{ fontSize: 8 }}
-          axisLine={false}
-          tickLine={false}
-        />
-        <Tooltip />
-        <Line type="monotone" dataKey="uv" stroke="#56bb80" />
-      </AreaChart>
-    </ResponsiveContainer> */
 }
