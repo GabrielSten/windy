@@ -76,7 +76,7 @@ export default async function Place({ params }: { params: { id: string } }) {
           return (
             <div
               key={index + "_weekday"}
-              className="h-32 items-center flex flex-row "
+              className="h-32 w-full items-center flex flex-row "
             >
               <div className="text-xs text-orange flex-none w-8">{weekDay}</div>
               <div className="text-xs text-orange flex-none w-8">

@@ -7,6 +7,7 @@ import {
   AreaChart,
   Area,
   YAxis,
+  ReferenceLine,
 } from "recharts";
 import { SMHIdata, SortedTime, TimeSery } from "../types";
 import { useState } from "react";
@@ -48,6 +49,7 @@ export default function Graph(props: { data: TimeSery[] | undefined }) {
           bottom: 1,
         }}
       >
+        <ReferenceLine y={9} stroke="#adbecb" strokeDasharray="3 3" />
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#ed8d25" stopOpacity={0.8} />
