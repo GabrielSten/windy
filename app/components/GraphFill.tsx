@@ -8,6 +8,7 @@ import {
   Area,
   YAxis,
   ReferenceLine,
+  CartesianGrid,
 } from "recharts";
 import { SMHIdata, SortedTime, TimeSery } from "../types";
 import { useState } from "react";
@@ -18,11 +19,23 @@ interface GraphData {
   ms: number;
 }
 
+const gradientOffset = (data: GraphData[], refLine: number) => {
+  const dataMax = Math.max(...data.map((i) => i.ms));
+  const dataMin = Math.min(...data.map((i) => i.ms));
+
+  if (dataMax <= refLine) {
+    return 0;
+  }
+  if (dataMin >= refLine) {
+    return 1;
+  }
+
+  return dataMax / (dataMax - dataMin);
+};
+
 export default function Graph(props: { data: TimeSery[] | undefined }) {
-  const [start, setStart] = useState("06:00");
-  const [stop, setStop] = useState("22:00");
   const data = props.data;
-  const dataArray = [data];
+  const refLine = 6;
 
   const graphData: GraphData[] = [];
   data?.map((t, index) => {
@@ -35,6 +48,9 @@ export default function Graph(props: { data: TimeSery[] | undefined }) {
       }
     });
   });
+
+  const off = gradientOffset(graphData, refLine);
+  console.log(off);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -50,17 +66,12 @@ export default function Graph(props: { data: TimeSery[] | undefined }) {
         }}
       >
         <ReferenceLine
-          y={8}
+          y={refLine}
           stroke="#adbecb"
           strokeDasharray="3 3"
           key={"refLine"}
         />
-        <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#ed8d25" stopOpacity={0.8} />
-            <stop offset="0%" stopColor="#56bb80" stopOpacity={0} />
-          </linearGradient>
-        </defs>
+
         <YAxis
           type="number"
           hide={true}
@@ -76,12 +87,18 @@ export default function Graph(props: { data: TimeSery[] | undefined }) {
           tickLine={false}
         />
         <Tooltip />
+        <defs>
+          <linearGradient id="splitColor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset={off} stopColor="#56bb80" stopOpacity={1} />
+            <stop offset={off} stopColor="#ed8d25" stopOpacity={1} />
+          </linearGradient>
+        </defs>
+
         <Area
           type="monotone"
           dataKey="ms"
           stroke="#56bb80"
-          fillOpacity={1}
-          fill="url(#colorUv)"
+          fill="url(#splitColor)"
         />
       </AreaChart>
     </ResponsiveContainer>

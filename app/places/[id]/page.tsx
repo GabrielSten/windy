@@ -3,8 +3,8 @@ import NavBar from "@/app/components/NavBar";
 import { parseSwe } from "@/app/utils";
 import { places } from "@/app/conf";
 import date from "date-and-time";
-import MyButton from "@/app/components/MyButton";
 import Graph from "@/app/components/Graph";
+import GraphFill from "@/app/components/GraphFill";
 
 async function getData(placeName: string) {
   const placeData = places.find(
@@ -34,15 +34,6 @@ export default async function Place({ params }: { params: { id: string } }) {
     const now = new Date();
     const validTime = new Date(stamp.validTime);
     const weekDay: string = date.format(validTime, "ddd");
-
-    /* data.timeSeries.map((s, index) => {
-      const vT = new Date(s.validTime);
-      if (
-        date.format(validTime, "YYYY/MM/DD") === date.format(vT, "YYY/MM/DD")
-      ) {
-        dayTimeSeries.push(s);
-      }
-    }); */
 
     if (
       sortedTime[sortedTime.length - 1]?.weekDay != weekDay &&
@@ -78,17 +69,18 @@ export default async function Place({ params }: { params: { id: string } }) {
               key={index + "_weekday"}
               className="h-32 w-full items-center flex flex-row "
             >
-              <div className="text-xs text-orange flex-none w-8">{weekDay}</div>
-              <div className="text-xs text-orange flex-none w-8">
-                {date.format(weekDayDate, "D/M")}
+              <div className="flex-none w-8 mx-2">
+                <div className="text-xs text-orange ">{weekDay}</div>
+                <div className="text-xs text-orange">
+                  {date.format(weekDayDate, "D/M")}
+                </div>
               </div>
               <div className="w-full h-full">
-                <Graph data={timeSeries} />
+                <GraphFill data={timeSeries} />
               </div>
             </div>
           );
         })}
-        <MyButton />
       </div>
       {id} page
     </main>

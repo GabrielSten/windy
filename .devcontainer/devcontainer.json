@@ -1,0 +1,25 @@
+{
+	"name": "Windy",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "windy",
+	"workspaceFolder": "/var/windy",
+	"shutdownAction": "stopCompose",
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		3000
+	],
+	"postStartCommand": "npm install && npm run dev",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot",
+				"bradlc.vscode-tailwindcss",
+				"ms-vscode-remote.remote-containers",
+				"ms-azuretools.vscode-docker",
+				"dbaeumer.vscode-eslint"
+			]
+		}
+	}
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}

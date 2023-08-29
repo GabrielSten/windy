@@ -6,6 +6,8 @@ const nextConfig = {
       { source: "/", destination: "/places/gothenburg", permanent: true },
     ];
   },
+  // for the docker image:
+  output: "standalone",
 };
 
 module.exports = nextConfig;
