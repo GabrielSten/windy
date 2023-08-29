@@ -1,4 +1,4 @@
-import { SMHIdata, SortedTime, TimeSery } from "../../types";
+import { SMHIdata, SortedTime } from "../../types";
 import NavBar from "@/app/components/NavBar";
 import { parseSwe } from "@/app/utils";
 import { places } from "@/app/conf";
@@ -28,7 +28,6 @@ export default async function Place({ params }: { params: { id: string } }) {
   const id = params.id;
   const data: SMHIdata = await getData(params.id);
 
-  const days: String[][] = [];
   const sortedTime: SortedTime[] = [];
   data.timeSeries.map((stamp) => {
     const now = new Date();
@@ -36,8 +35,8 @@ export default async function Place({ params }: { params: { id: string } }) {
     const weekDay: string = date.format(validTime, "ddd");
 
     if (
-      sortedTime[sortedTime.length - 1]?.weekDay != weekDay &&
-      validTime > now
+      sortedTime[sortedTime.length - 1]?.weekDay != weekDay /* &&
+      validTime > now */
     ) {
       const dayTimeSeries: SortedTime["timeSeries"] = [];
       data.timeSeries.map((s, index) => {
@@ -69,7 +68,7 @@ export default async function Place({ params }: { params: { id: string } }) {
               key={index + "_weekday"}
               className="h-32 w-full items-center flex flex-row "
             >
-              <div className="flex-none w-8 mx-2">
+              <div className="flex-none w-8 mx-2 mt-10">
                 <div className="text-xs text-orange ">{weekDay}</div>
                 <div className="text-xs text-orange">
                   {date.format(weekDayDate, "D/M")}
